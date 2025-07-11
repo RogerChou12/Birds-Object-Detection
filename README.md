@@ -1,4 +1,8 @@
 # Birds-Object-Detection
+This repository provides a solution for real-time or offline bird species detection in videos and RTSP streams using the DETR (DEtection TRansformer) model. It enables users to automatically identify, classify, and annotate bird species in video frames, supporting both local video files and live video streams. The project is designed for applications such as wildlife monitoring, ecological research, and automated video analysis, making bird detection accessible and efficient with modern deep learning techniques.
+
+---
+
 ## Real-Time Bird Detection with DETR and RTSP Streaming
 
 [`detect.py`](detect.py) performs real-time or offline bird species detection using the [DETR (DEtection TRansformer)](https://huggingface.co/facebook/detr-resnet-50) model from Hugging Face Transformers. It supports both RTSP streams and video files as input, overlays bounding boxes with labels, and optionally streams the annotated video via RTSP or saves it locally.
