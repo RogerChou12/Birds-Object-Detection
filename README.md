@@ -37,7 +37,7 @@ python detect.py --input rtsp://your_stream_url
 ---
 
 ### Prerequisites
-- Python 3.8+
+- Python 3.9+
 - FFmpeg installed (`ffmpeg` in PATH)
 - GPU with CUDA (optional but recommended)
 
@@ -51,6 +51,7 @@ Install the required Python packages:
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 pip3 install transformers torchmetrics pillow opencv-python numpy
 ```
+Installation of `transformers`: [Transformers](https://github.com/huggingface/transformers/tree/main#installation)
 
 ---
 
