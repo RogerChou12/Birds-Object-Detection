@@ -177,3 +177,88 @@ accelerate launch train.py \
 - [Hugging Face DETR Documentation](https://huggingface.co/facebook/detr-resnet-50)
 - [Accelerate](https://github.com/huggingface/accelerate)
 - [Albumentations](https://albumentations.ai/)
+
+---
+
+## Data Collection and Annotation
+
+This document explains how to use `yolo_inference.py` and `plotAnno.py` to automatically collect, annotate, and analyze bird detection data from videos stored in AWS S3, using YOLOv5 for inference.
+
+- [**yolo_inference.py**](DataCollect/yolo_inference.py): Automates bird detection in videos from S3, generates bounding box annotations, saves cropped images, and uploads results and annotations back to S3.
+- [**plotAnno.py**](plotAnno.py): Provides quick statistical analysis and visualization of the resulting annotations, helping you understand detection quality and category distributions.
+
+---
+
+### 1. Data & Annotation Collection ([`yolo_inference.py`](DataCollect/yolo_inference.py))
+
+- Connects to AWS S3, lists videos in the input bucket/prefix.
+- Downloads each video, processes frames using YOLOv5 (pretrained for bird detection).
+- Crops detected bird regions, saves cropped images and annotated frames to S3.
+- Generates annotation JSON files for both frames and crops, uploading them to S3.
+
+**Key Outputs:**
+- `annotations.json` (bounding box and detection info for each frame)
+- `annotations_crop.json` (cropped image info)
+- Cropped bird images and annotated frames in specified S3 folders
+
+### 2. Data Visualization & Analysis ([`plotAnno.py`](plotAnno.py))
+
+- Loads `annotations.json`.
+- Computes and plots:
+  - Number of boxes per image
+  - Detection confidence histogram
+  - Box area histogram
+  - Category (class) distribution pie chart
+- Saves visualization as `data_analysis.png`
+
+---
+
+### Required Packages
+
+Install with pip:
+
+```bash
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+pip install boto3 botocore opencv-python numpy matplotlib pandas
+```
+
+---
+
+### Usage
+
+#### 1. Prepare S3 and Class Mapping
+
+- Store your videos in an S3 bucket/prefix.
+- Prepare `class_mapping.json` and `class_mapping_chinese.json` (for category ID/name mapping).
+- Set your AWS credentials and bucket/prefix info in `yolo_inference.py`.
+
+#### 2. Run YOLO Inference & Annotation
+
+```bash
+python DataCollect/yolo_inference.py
+```
+- This will process all videos in the specified S3 bucket/prefix, save results locally and upload images/annotations to S3.
+
+#### 3. Visualize Annotation Statistics
+
+```bash
+python plotAnno.py
+```
+- This will produce `data_analysis.png` summarizing the annotation statistics.
+
+---
+
+### Notes
+
+- Make sure you have sufficient permissions to access and write to your S3 buckets.
+- Adjust YOLO model parameters and S3 settings in `yolo_inference.py` as needed for your use case.
+- Visualization assumes `annotations.json` exists in the working directory.
+
+---
+
+### References
+
+- [Ultralytics YOLOv5](https://github.com/ultralytics/yolov5)
+- [AWS S3 Python SDK (boto3)](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html)
+- [OpenCV](https://opencv.org/)
+- [Matplotlib](https://matplotlib.org/)
