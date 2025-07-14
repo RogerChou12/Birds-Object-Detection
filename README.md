@@ -3,6 +3,26 @@ This repository provides a solution for real-time or offline bird species detect
 
 ---
 
+## Installation
+
+### Prerequisites
+- Python 3.9+
+- FFmpeg installed (`ffmpeg` in PATH)
+- GPU with CUDA (optional but recommended)
+
+### Required Python Packages
+
+Install all dependencies before running any scripts:
+
+```bash
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+pip install transformers torchmetrics pillow opencv-python numpy
+pip install accelerate datasets albumentations tensorboard tqdm
+```
+Installation of `transformers`: [Transformers](https://github.com/huggingface/transformers/tree/main#installation)
+
+---
+
 ## Real-Time Bird Detection with DETR and RTSP Streaming
 
 [`detect.py`](detect.py) performs real-time or offline bird species detection using the [DETR (DEtection TRansformer)](https://huggingface.co/facebook/detr-resnet-50) model from Hugging Face Transformers. It supports both RTSP streams and video files as input, overlays bounding boxes with labels, and optionally streams the annotated video via RTSP or saves it locally.
@@ -27,26 +47,8 @@ This repository provides a solution for real-time or offline bird species detect
 
 ---
 
-### Prerequisites
-- Python 3.9+
-- FFmpeg installed (`ffmpeg` in PATH)
-- GPU with CUDA (optional but recommended)
-
----
-
-### Dependencies
-
-Install the required Python packages:
-
-```bash
-pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-pip3 install transformers torchmetrics pillow opencv-python numpy
-```
-Installation of `transformers`: [Transformers](https://github.com/huggingface/transformers/tree/main#installation)
-
----
-
 ### Usage
+
 Run with a video file:
 ```sh
 python detect.py --input path/to/video.mp4
@@ -135,20 +137,8 @@ The `train.py` script is designed to:
 
 ---
 
-### Dependencies
-
-Install all dependencies before running the script:
-
-```bash
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-pip install transformers accelerate datasets albumentations pillow numpy torchmetrics tensorboard tqdm
-```
-
----
-
----
-
 ### Usage
+
 About training with accelerate: [here](https://github.com/huggingface/transformers/tree/main/examples/pytorch/object-detection#pytorch-version-no-trainer)
 ```sh
 accelerate launch train.py \
@@ -168,15 +158,9 @@ accelerate launch train.py \
 ---
 
 ### Notes
+
 - Distributed/multi-GPU training is supported via [Accelerate](https://github.com/huggingface/accelerate).
 - For best results, ensure your dataset and class mapping files are correctly formatted.
-
----
-
-### Reference
-- [Hugging Face DETR Documentation](https://huggingface.co/facebook/detr-resnet-50)
-- [Accelerate](https://github.com/huggingface/accelerate)
-- [Albumentations](https://albumentations.ai/)
 
 ---
 
@@ -211,16 +195,6 @@ This document explains how to use `yolo_inference.py` and `plotAnno.py` to autom
   - Category (class) distribution pie chart
 - Saves visualization as `data_analysis.png`
 
----
-
-### Required Packages
-
-Install with pip:
-
-```bash
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-pip install boto3 botocore opencv-python numpy matplotlib pandas
-```
 
 ---
 
@@ -256,8 +230,12 @@ python plotAnno.py
 
 ---
 
-### References
+## References
 
+- [Hugging Face DETR Documentation](https://huggingface.co/facebook/detr-resnet-50)
+- [Transformers](https://github.com/huggingface/transformers/tree/main)
+- [Accelerate](https://github.com/huggingface/accelerate)
+- [Albumentations](https://albumentations.ai/)
 - [Ultralytics YOLOv5](https://github.com/ultralytics/yolov5)
 - [AWS S3 Python SDK (boto3)](https://boto3.amazonaws.com/v1/documentation/api/latest/index.html)
 - [OpenCV](https://opencv.org/)
